@@ -235,7 +235,7 @@ def main(config, needs_save, i):
         checkpoint_handler = ModelCheckpoint(
             output_dir_path,
             config.save.study_name,
-            save_interval=config.save.save_epoch_interval,
+            # save_interval=config.save.save_epoch_interval,
             n_saved=config.run.n_epochs + 1,
             create_dir=True,
         )
@@ -338,7 +338,7 @@ def main(config, needs_save, i):
         save_images_via_plt(image, label, output, config.save.n_save_images, config, save_path)
 
     if needs_save:
-        trainer.add_event_handler(event_name=Events.EPOCH_COMPLETED,
+        trainer.add_event_handler(event_name=Events.EPOCH_COMPLETED(every=config.save.save_epoch_interval),
                                   handler=checkpoint_handler,
                                   to_save={'model': model, 'optim': optimizer})
 
