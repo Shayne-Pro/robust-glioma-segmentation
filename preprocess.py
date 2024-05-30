@@ -44,7 +44,7 @@ if __name__ == '__main__':
                 patient_id + '_' + modality['pattern'] + '.nii.gz'
             )
             nii_file = nib.load(file_path)
-            series = nii_file.get_data()
+            series = nii_file.get_fdata()
 
             if modality['name'] == 'SEG':
                 series = series.astype(np.int32)

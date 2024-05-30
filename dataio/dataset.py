@@ -70,14 +70,14 @@ class MICCAIBrats2019Dataset(data.Dataset):
                 continue
 
             if modality != 'SEG':
-                series = nib.load(item[modality]).get_data()
+                series = nib.load(item[modality]).get_fdata()
                 if image is None:
                     image = series[np.newaxis, ...]
                 else:
                     image = np.concatenate((image, series[np.newaxis, ...]), axis=0)
 
             else:
-                label = nib.load(item[modality]).get_data()
+                label = nib.load(item[modality]).get_fdata()
 
         if self.mode in ['train', 'val']:
             sample = {
