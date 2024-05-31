@@ -102,7 +102,7 @@ def main(config, needs_save, i):
         filters=config.model.filters,
     )
 
-    print(model)
+    # print(model)
 
     if config.run.use_cuda:
         model.cuda()
@@ -110,7 +110,10 @@ def main(config, needs_save, i):
 
     if config.model.saved_model:
         print('Loading saved model: {}'.format(config.model.saved_model))
-        model.load_state_dict(torch.load(config.model.saved_model))
+        checkpoint = torch.load(config.model.saved_model)
+        model.module.load_state_dict(checkpoint['model'])
+
+        # model.load_state_dict(torch.load(config.model.saved_model))
     else:
         print('Initializing weights.')
         init_weights(model, init_type=config.model.init_type)
